@@ -1,6 +1,6 @@
-# Simple passport.js example
+# Simple child_process.fork() example
 
-My first approach to [passport-local](https://www.passportjs.org/packages/passport-local/), with [Mongo Atlas](https://www.mongodb.com/es/cloud/atlas/register) for Session and Profile storage.
+My first approach to [child_process.fork()](https://nodejs.org/api/child_process.html#child_processforkmodulepath-args-options).
 
 ## To run
 
@@ -9,43 +9,24 @@ Install all dependencies
 ```bash
 npm install
 ```
-then, simply:
+Then you have two run options:
 ```bash
-npm run dev
+node index.js --fork
+node index.js
 ```
+In the first one (--fork), a child process is spawned to calculate a set of "cant" (see below) number of random numbers between 1 to 1000.
+
+You can test the two routes (see below) to check for "concurrent" responses from server.
+
+On the other hand (no --fork), regular "single thread" execution is launched.
 
 ## These are the routes
 
 ```bash
-localhost:8080/welcome
-localhost:8080/registro
-localhost:8080/login
+localhost:8080/api/randoms?cant=   (whatever number you like. If no number is passed, it is assing 100000 by default))
+
+localhost:8080/info
 ```
 
 
-## This is a work in progress, so these are a couple of known isues:
-
-Don't like them. Gotta find a better way
-
-```javascript
-// route middleware
-
-function checkFormData(req, res, next){ // test for some rules in register form
-  let formErrors = registerCheck(req.body)
-  if(formErrors.length===0){
-    next();
-  }else{
-    res.render("layouts/userRegister", {formErrors, ...req.body})
-  }
-}
-```
-
-```javascript
-function checkPrecedent(req, res, next){ // tries to jump isAuthenticated() if it comes from /registro
-
-  if(req.rawHeaders[27]==='http://localhost:8080/registro'){
-    req.comesFromRegistro=true
-  }
-    next();
-}
-```
+## Enjoy this next saturday night
