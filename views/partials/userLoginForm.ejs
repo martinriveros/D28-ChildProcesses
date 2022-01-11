@@ -1,0 +1,36 @@
+<div class="row mt-5">
+  <div class="col-md-4 m-auto">
+    <div class="card card-body text-center mb-3">
+      <h1><img src="/icono.png"></h1>
+      <h1>Logueate</h1>
+      <%- include ("./messages", {formErrors}) %>
+      
+      <form action="/login" method="POST">
+        <div class="form-group">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            placeholder="Enter Email"
+            value="<%= typeof email != 'undefined' ? email : '' %>"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            placeholder="Contrasena"
+            value="<%= typeof password != 'undefined' ? password : '' %>"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </form>
+      <p class="lead mt-4">
+        No tenes cuenta? <a href="/registro">Entonces registrate</a>
+      </p>
+    </div>
+  </div>
+</div>

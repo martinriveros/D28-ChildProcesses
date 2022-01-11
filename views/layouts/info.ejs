@@ -1,0 +1,28 @@
+<%- include("../partials/header", {title:"D27-Passport"}) %>
+<div class="row mt-8">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body text-center mb-3">
+        <h1><img src="/icono.png"></h1>
+           <table class="table text-start table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Caracteristica</th>
+                        <th scope="col">Descripcion</th>
+                    </tr>
+                </thead>
+    <tbody>
+      <% data.forEach((element, index) => {%>
+        <tr>
+            <th scope="row"><%= index+1 %></th>
+            <td><%= element.desc %></td>
+            <td><%= element.value %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  </div>
+</div>
+</div>
+<%- include("../partials/footer") %>

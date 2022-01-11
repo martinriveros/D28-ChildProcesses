@@ -1,0 +1,22 @@
+<% formErrors.forEach(error => {%>
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong><%= error.field %> : </strong> <%= error.msg %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% })%>
+
+<% if(successMsg !='') {%>
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong><%= successMsg %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+<% } %>
+<% if(errorMsg !='') {%>
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong><%= errorMsg %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+<% } %>

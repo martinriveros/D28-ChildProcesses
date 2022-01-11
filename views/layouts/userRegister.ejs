@@ -1,0 +1,10 @@
+<%- include("../partials/header", {title:"D27-Passport", loggedUser:'test'}) %>
+
+
+<% if(typeof formErrors !=='undefined'){ %>
+    
+    <%- include("../partials/userRegisterForm", {formErrors, name, password, rePassword, email}) %>
+<% } else { %>
+    <%- include("../partials/userRegisterForm", {formErrors:[]}) %>
+    <% } %>
+<%- include("../partials/footer") %>

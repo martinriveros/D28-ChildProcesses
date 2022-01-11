@@ -1,0 +1,56 @@
+<div class="row mt-5">
+  <div class="col-md-4 m-auto">
+    <div class="card card-body text-center mb-3">
+      <h1><img src="/icono.png"></h1>
+      <h1>Registrate</h1>
+      <%= console.log(formErrors) %>
+      <%- include ("./messages", {formErrors}) %>
+      <form action="/registro" method="POST">
+        <div class="form-group">
+          <input
+            type="name"
+            id="name"
+            name="name"
+            class="form-control lh-lg"
+            placeholder="Nombre"
+            value="<%= typeof name != 'undefined' ? name : '' %>"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control lh-lg"
+            placeholder="Email"
+            value="<%= typeof email != 'undefined' ? email : '' %>"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control lh-lg"
+            placeholder="Contrasena (alfanumerica)"
+            value="<%= typeof password != 'undefined' ? password : '' %>"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            id="rePassword"
+            name="rePassword"
+            class="form-control lh-lg"
+            placeholder="Confirma la contrasena (alfanumerica)"
+            value="<%= typeof rePassword != 'undefined' ? rePassword : '' %>"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">
+          Crea la cuenta
+        </button>
+      </form>
+      <p class="lead mt-4">Ya tenes cuenta ? <a href="/login">Logueate</a></p>
+    </div>
+  </div>
+</div>
