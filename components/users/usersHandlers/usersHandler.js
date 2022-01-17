@@ -2,6 +2,8 @@ const usersModel = require("../../../config/db");;
 const cp = require('child_process')
 const path = require('path')
 const {calculateRandom} = require('../usersServices/calculateRandom')
+var calculateRandomCP
+var childProcessActive=false
 
 class UsersHandler {
     
@@ -72,23 +74,20 @@ class UsersHandler {
   }
 
   async getRandoms(req, res, next){
-    
+   
       const {cant} = req.query;
       if(!cant) cant=1000000;
-      
-      if(process.argv[2]==='--fork'){
-  
-
-      const calculateRandomCP = cp.fork(path.join(__dirname, '../usersServices/calculateRandom'))
-      
-      calculateRandomCP.send(cant)
-      console.log(path.resolve(__dirname, '../usersServices/calculateRandom.js'))
-      
-      calculateRandomCP.on('message', response =>{
-        res.send(response.data)
-      })
-    }else{
-      res.send(calculateRandom(cant))
+        if(process.argv[2]==='--fork'){
+          
+          if(childProcessActive){
+            calculateRandomCP.send(cant)
+            calculateRandomCP.on('message', response =>{
+              res.send(response.data)})
+            }else{
+              calculateRandomCP = cp.fork(path.join(__dirname, '../usersServices/calculateRandom'))}
+          
+        }else{
+          res.send(calculateRandom(cant))
     }
 
     }  

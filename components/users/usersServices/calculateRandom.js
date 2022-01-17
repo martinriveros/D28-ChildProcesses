@@ -4,7 +4,7 @@ process.on('message', cant =>{
     console.log('From calculateRandom.js file: ', cant);
     process.send({data:calculateRandom(cant)})})
 
-function calculateRandom(cant){
+exports.calculateRandom = cant => {
 
   let results = [];
 
@@ -17,5 +17,3 @@ function calculateRandom(cant){
       }
     }
 return {...results}}
-
-module.exports = { calculateRandom }
