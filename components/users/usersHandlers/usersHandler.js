@@ -62,10 +62,11 @@ class UsersHandler {
     const data = [
       
       {desc: 'Argumentos de entrada: ', value: process.argv.length === 2 ?  'no arguments on command line': process.argv[2]},
-      {desc: 'Path de Ejecucion: ', value: process.argv[1]},
+      {desc: 'Path de Ejecucion: ', value: process.execPath},
       {desc: 'Sistema operativo: ', value: process.platform},
-      {desc: 'Version de Node: ', value: process.release.lts},
+      {desc: 'Version de Node: ', value: process.version},
       {desc: 'Uso de CPU: ', value: process.memoryUsage.rss()},
+      {desc: 'Numero de CPUs: ', value: cpus().length},
       {desc: 'ID de Proceso: ', value:process.pid},
       {desc: 'Carpeta de Proyecto', value: process.cwd()},
     ];
@@ -74,22 +75,30 @@ class UsersHandler {
   }
 
   async getRandoms(req, res, next){
-   
-      const {cant} = req.query;
-      if(!cant) cant=1000000;
-        if(process.argv[2]==='--fork'){
-          
-          if(childProcessActive){
-            calculateRandomCP.send(cant)
-            calculateRandomCP.on('message', response =>{
-              res.send(response.data)})
-            }else{
-              calculateRandomCP = cp.fork(path.join(__dirname, '../usersServices/calculateRandom'))}
-          
-        }else{
-          res.send(calculateRandom(cant))
+    
+    const {cant} = req.query;
+    
+    if(!cant) cant=1000000;
+    
+    console.log(process.argv[2])
+    
+    if(process.argv[2]==='--fork' && !childProcessActive){
+            
+        calculateRandomCP = cp.fork(path.join(__dirname, '../usersServices/calculateRandom'))          
+        
+        calculateRandomCP.on('message', response =>{
+          res.send(response.data)
+          calculateRandomCP.kill()
+        })
+  
+        calculateRandomCP.send(cant)}
+    
+    else{
+      
+      if(process.argv[2]!=='--fork') res.send(calculateRandom(cant))
+      
+      if(childProcessActive) calculateRandomCP.send(cant)
     }
-
-    }  
+}
 }
 module.exports = new UsersHandler();
